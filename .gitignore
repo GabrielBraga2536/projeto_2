@@ -1,0 +1,8 @@
+# Ignorar arquivos compilados
+*.class
+*.o
+*.obj
+
+# Ignorar binários ou executáveis
+*.exe
+*.so
