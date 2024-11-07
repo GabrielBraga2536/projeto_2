@@ -18,14 +18,40 @@ int main(int argc, char** argv){
   );
   
   SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-  SDL_Texture* img = IMG_LoadTexture(renderer, "imgs/starting_screen.jpg");
+  SDL_Texture* img = IMG_LoadTexture(renderer, "imgs/battle/battle_background.jpg");
+  if( img == NULL ){
+    cout << "Erro ao carregar imagem" << endl;
+    return -1;
+  }
+
+  SDL_Texture* img2 = IMG_LoadTexture(renderer, "imgs/battle/battle_text_box.png");
+  if( img2 == NULL ){
+    cout << "Erro ao carregar imagem" << endl;
+    return -1;
+  }
   
-  SDL_Rect rect, rect2;
+  SDL_Texture* img3 = IMG_LoadTexture(renderer, "imgs/pokemon_front/0.png");
+  if( img3 == NULL ){
+    cout << "Erro ao carregar imagem" << endl;
+    return -1;
+  }
+
+  SDL_Rect rect, rect2, rect3;
   rect.x = 0;
   rect.y = 0;
   rect.w = window_width;
   rect.h = window_height;
   
+  rect2.x = 0;
+  rect2.y = 357;
+  rect2.w = window_width;
+  rect2.h = 123;
+  
+  rect3.x = 380;
+  rect3.y = 115;
+  rect3.w = 192;
+  rect3.h = 192;
+
   while(true){
     SDL_Event event;
     while(SDL_PollEvent(&event)){
@@ -38,9 +64,10 @@ int main(int argc, char** argv){
     
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 240, 250, 50, 255);
-    SDL_RenderFillRect(renderer, &rect2);
     SDL_SetRenderDrawColor(renderer, 9, 20, 33, 255);
     SDL_RenderCopy(renderer, img, NULL, &rect);
+    SDL_RenderCopy(renderer, img2, NULL, &rect2);
+    SDL_RenderCopy(renderer, img3, NULL, &rect3);
     SDL_RenderPresent(renderer);
   }
   
