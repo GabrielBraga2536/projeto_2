@@ -3,23 +3,15 @@
 #include <iostream>
 #include <string>
 
-#include "Pokemon.hpp"
-#include "TipoPokemon.hpp"
-
 using namespace std;
 
-class Ataque: public Pokemon{
+class Ataque{
   private:
-    TipoPokemon tipo;
     int power;
 
   public:
     int getPower(){
       return power;
-    }
-    
-    TipoPokemon getTipoAtaque(){
-      return tipo;
     }
     
     int calcularDano(){

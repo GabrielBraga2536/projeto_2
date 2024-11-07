@@ -30,13 +30,25 @@ int main(int argc, char** argv){
     return -1;
   }
   
-  SDL_Texture* img3 = IMG_LoadTexture(renderer, "imgs/pokemon_front/0.png");
+  SDL_Texture* img3 = IMG_LoadTexture(renderer, "imgs/pokemon_front/4.png");
   if( img3 == NULL ){
     cout << "Erro ao carregar imagem" << endl;
     return -1;
   }
 
-  SDL_Rect rect, rect2, rect3;
+  SDL_Texture* img4 = IMG_LoadTexture(renderer, "imgs/battle/choice_text_box.png");
+  if( img4 == NULL ){
+    cout << "Erro ao carregar imagem" << endl;
+    return -1;
+  }
+
+  SDL_Texture* img5 = IMG_LoadTexture(renderer, "imgs/pokemon_back/1.png");
+  if( img5 == NULL ){
+    cout << "Erro ao carregar imagem" << endl;
+    return -1;
+  }
+
+  SDL_Rect rect, rect2, rect3, rect4, rect5;
   rect.x = 0;
   rect.y = 0;
   rect.w = window_width;
@@ -47,10 +59,20 @@ int main(int argc, char** argv){
   rect2.w = window_width;
   rect2.h = 123;
   
-  rect3.x = 380;
+  rect3.x = 390;
   rect3.y = 115;
-  rect3.w = 192;
-  rect3.h = 192;
+  rect3.w = 164;
+  rect3.h = 164;
+
+  rect4.x = 360 ;
+  rect4.y = 360;
+  rect4.w = window_width/2;
+  rect4.h = 120;
+
+  rect5.x = 100;
+  rect5.y = 200;
+  rect5.w = 240;
+  rect5.h = 240;
 
   while(true){
     SDL_Event event;
@@ -66,8 +88,10 @@ int main(int argc, char** argv){
     SDL_SetRenderDrawColor(renderer, 240, 250, 50, 255);
     SDL_SetRenderDrawColor(renderer, 9, 20, 33, 255);
     SDL_RenderCopy(renderer, img, NULL, &rect);
+    SDL_RenderCopy(renderer, img5, NULL, &rect5);
     SDL_RenderCopy(renderer, img2, NULL, &rect2);
     SDL_RenderCopy(renderer, img3, NULL, &rect3);
+    SDL_RenderCopy(renderer, img4, NULL, &rect4);
     SDL_RenderPresent(renderer);
   }
   
