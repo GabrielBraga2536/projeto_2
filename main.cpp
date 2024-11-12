@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ int main(int argc, char** argv){
     return -1;
   }
 
-  SDL_Texture* img2 = IMG_LoadTexture(renderer, "imgs/battle/battle_text_box.png");
+  SDL_Texture* img2 = IMG_LoadTexture(renderer, "imgs/battle/battle_attack_box.png");
   if( img2 == NULL ){
     cout << "Erro ao carregar imagem" << endl;
     return -1;
@@ -42,7 +43,7 @@ int main(int argc, char** argv){
     return -1;
   }
 
-  SDL_Texture* img5 = IMG_LoadTexture(renderer, "imgs/pokemon_back/1.png");
+  SDL_Texture* img5 = IMG_LoadTexture(renderer, "imgs/pokemon_back/4.png");
   if( img5 == NULL ){
     cout << "Erro ao carregar imagem" << endl;
     return -1;
@@ -79,8 +80,6 @@ int main(int argc, char** argv){
     while(SDL_PollEvent(&event)){
       if( event.type == SDL_QUIT ){
         exit(0);
-      }else if( event.type == SDL_MOUSEBUTTONDOWN ){
-        rect2.x -= 20;
       }
     }
     
@@ -91,7 +90,7 @@ int main(int argc, char** argv){
     SDL_RenderCopy(renderer, img5, NULL, &rect5);
     SDL_RenderCopy(renderer, img2, NULL, &rect2);
     SDL_RenderCopy(renderer, img3, NULL, &rect3);
-    SDL_RenderCopy(renderer, img4, NULL, &rect4);
+    //SDL_RenderCopy(renderer, img4, NULL, &rect4);
     SDL_RenderPresent(renderer);
   }
   
