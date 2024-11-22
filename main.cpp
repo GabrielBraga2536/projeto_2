@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <unistd.h>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -20,15 +21,21 @@
 
 #include "debug.cpp"
 
-using namespace std;
+using namespace std; // Utiliza o namespace std para não precisar escrever std:: antes de funções como cout e endl
 
-#define window_width 720 
-#define window_height 480
+#define window_width 720 // Largura da janela do jogo
+#define window_height 480 // Altura da janela do jogo
+
+#define position_choosed_x1 100 // Posição x do primeiro pokemon escolhido
+#define position_choosed_x2 200 // Posição x do segundo pokemon escolhido
+#define position_choosed_x3 300 // Posição x do terceiro pokemon escolhido
+#define position_choosed_y 5 // Posição y do pokemon escolhido (padrão 5 para qualquer pokemon escohlido)
 
 int main(int argc, char** argv){
   SDL_Init(SDL_INIT_EVERYTHING); // Inicializa toda a SDL2
   TTF_Init(); // Inicializa a SDL2_ttf para carregar os arquivos de fonte para o texto
   
+  // Cria os ataques que serão utilizados pelos pokemons
   Ataque ataque1(120, 96, "Especial");
   Ataque ataque2(110, 102, "Especial");
   Ataque ataque3(100, 115, "Especial");
@@ -37,7 +44,7 @@ int main(int argc, char** argv){
   Ataque ataque6(110, 102, "Fisico");
   Ataque ataque7(100, 115, "Fisico");
   Ataque ataque8(90, 127, "Fisico");
-  Ataque pularAtaque(0, -1, "Fisico");
+  Ataque pularAtaque(0, -1, "Fisico"); // Ataque que não causa dano e é utilizado para pular o turno
   
   Pokemon* pokemons[5];
   pokemons[0] = new PokemonPlanta(0, "Serperior", 150, 150, 85, 85, 113, ataque1, ataque6, ataque3, ataque8, pularAtaque);
@@ -45,7 +52,10 @@ int main(int argc, char** argv){
   pokemons[2] = new PokemonAgua(2, "Samurott", 190, 190, 92, 89, 70, ataque5, ataque2, ataque7, ataque4, pularAtaque);
   pokemons[3] = new PokemonFantasma(3, "Cofagrigus", 116, 116, 97, 100, 30, ataque1, ataque6, ataque3, ataque8, pularAtaque);
   pokemons[4] = new PokemonDragao(4, "Haxorus", 184, 184, 97, 107, 98, ataque1, ataque2, ataque3, ataque8, pularAtaque);
-    
+  
+  vector<Pokemon*> pokemonsEscolhidos; // Vetor que armazena os pokemons escolhidos pelo jogador
+  pokemonsEscolhidos.reserve(3); // Reserva espaço para 3 pokemons no vetor
+  
   SDL_Color white = {255, 255, 255, 255}; // Cor branca para o texto 
   
   TTF_Font* font = TTF_OpenFont("font/PKMN_RBYGSC.ttf", 100); // Carrega a fonte que será utilizada para exibir o texto
@@ -211,7 +221,7 @@ int main(int argc, char** argv){
   SDL_Texture* enemyName = SDL_CreateTextureFromSurface(renderer, enemyMessage); 
   SDL_Texture* startMessage = SDL_CreateTextureFromSurface(renderer, startMessageTxt); 
   
-  int up = 1;
+  int up = 1; // Variável que controla o movimento do texto "Press Start" na tela inicial
   
   while(true){
     SDL_Event event0;
@@ -229,11 +239,81 @@ int main(int argc, char** argv){
               if (event1.key.keysym.sym == SDLK_RIGHT && rect_hand_cursor.x < 480){
                 rect_hand_cursor.x += 100;
               }
-              else if (event1.key.keysym.sym == SDLK_LEFT && rect_hand_cursor.x >= 80){
+              else if (event1.key.keysym.sym == SDLK_LEFT && rect_hand_cursor.x > 100){
                 rect_hand_cursor.x -= 100;
               }
-              else if (event1.key.keysym.sym == SDLK_RETURN){
+              else if (event1.key.keysym.sym == SDLK_BACKSPACE){
                 estado1 = false;
+              }
+              else if(event1.key.keysym.sym == SDLK_RETURN){
+                if(pokemonsEscolhidos.size() == pokemonsEscolhidos.capacity()){ break; }
+                switch (rect_hand_cursor.x){
+                case 100:
+                  if(pokemonsEscolhidos[0] == NULL){
+                    pokemonsEscolhidos[0] = pokemons[0];
+                    rect_0_mini.x = position_choosed_x1;
+                    rect_0_mini.y = position_choosed_y;
+                    break;
+                  }
+                  else if(pokemonsEscolhidos[1] == NULL && pokemonsEscolhidos[0] != NULL){
+                    pokemonsEscolhidos[1] = pokemons[0];
+                    rect_0_mini.x = position_choosed_x2;
+                    rect_0_mini.y = position_choosed_y;
+                    break;
+                  }
+                  else if(pokemonsEscolhidos[2] == NULL){
+                    pokemonsEscolhidos[2] = pokemons[0];
+                    rect_0_mini.x = position_choosed_x3;
+                    rect_0_mini.y = position_choosed_y;
+                    break;
+                  }
+                  if(rect_0_mini.x == position_choosed_x1){
+                    rect_0_mini.x = 80;
+                    rect_0_mini.y = 140;
+                    break;
+                  }
+                  rect_0_mini.x = 100;
+                  rect_0_mini.y = position_choosed_y;
+                  break;
+                case 200:
+                  if(rect_1_mini.x == 200){
+                    rect_1_mini.x = 180;
+                    rect_1_mini.y = 140;
+                    break;
+                  }
+                  rect_1_mini.x = 200;
+                  rect_1_mini.y = position_choosed_y;
+                  break;
+                case 300:
+                  if(rect_2_mini.x == 300){
+                    rect_2_mini.x = 280;
+                    rect_2_mini.y = 140;
+                    break;
+                  }
+                  rect_2_mini.x = 300;
+                  rect_2_mini.y = position_choosed_y;
+                  break;
+                case 400:
+                  if(rect_3_mini.x == 400){
+                    rect_3_mini.x = 380;
+                    rect_3_mini.y = 140;
+                    break;
+                  }
+                  rect_3_mini.x = 400;
+                  rect_3_mini.y = position_choosed_y;
+                  break;
+                case 500:
+                  if(rect_4_mini.x == 500){
+                    rect_4_mini.x = 480;
+                    rect_4_mini.y = 140;
+                    break;
+                  }
+                  rect_4_mini.x = 500;
+                  rect_4_mini.y = position_choosed_y;
+                  break;
+                default:
+                  break;
+                }
               }
             }
           }
