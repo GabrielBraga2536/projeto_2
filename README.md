@@ -3,10 +3,15 @@
 
 Este projeto é uma simulação de batalha de Pokémon utilizando conceitos de orientação a objetos em C++. O projeto inclui diferentes tipos de Pokémon, treinadores e batalhas entre eles.
 
+Os comandos principais para navegar pelo jogo são:
+- **Direcionais**: Controla os cursores presentes no projeto, tanto dos menus como durante a batalha.
+- **Enter**: Confirmação das ações que deseja realizar durante o jogo.
+- **Backspace**: Volta para janelas anteriores, ainda não funciona em todo o projeto.
+- **RightCtrl**: Confirma a seleção dos pokemons na tela de seleção, e passa para o combate.
+
 ## Estrutura do Projeto
 - **objs/**: Contém os arquivos de cabeçalho e implementação das classes principais, como `Pokemon`, `Treinador`, `Batalha`, e os diferentes tipos de Pokémon (`PokemonAgua`, `PokemonFogo`, etc.).
 - **main.cpp**: Arquivo principal que inicializa o jogo e gerencia a lógica da batalha.
-- **main_teste.cpp**: Arquivo de teste para verificar o funcionamento das classes e métodos implementados.
 - **imgs/**: Contém os arquivos das imagens utilizadas no projeto.
 - **font/**: Contém os arquivos tff das fontes utilizadas no projeto.
 - **Ataque.hpp**: Define a classe `Ataque`, que representa os ataques dos Pokémon.
